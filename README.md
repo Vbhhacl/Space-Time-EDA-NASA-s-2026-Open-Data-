@@ -7,18 +7,18 @@ This project presents a full-stack Exploratory Data Analysis (EDA) dashboard bui
 The goal of this project is to analyze how temperature varies across time (years/months) and space (regions/global trends) using real-world NASA datasets. The system processes raw data, extracts meaningful insights, and presents them through an intuitive dashboard.
 
 ⚙️ Key Features
-🔍 Data Preprocessing & Cleaning
+#🔍 Data Preprocessing & Cleaning
 Handles missing values and inconsistent formats
 Transforms raw CSV data into structured format
-📊 Exploratory Data Analysis (EDA)
+#📊 Exploratory Data Analysis (EDA)
 Trend analysis of global temperatures over time
 Seasonal and yearly variation insights
 Statistical summaries and correlations
-🌍 Spatio-Temporal Visualization
+#🌍 Spatio-Temporal Visualization
 Time-series plots for temperature trends
 Comparative analysis across different periods
 Interactive charts for better understanding
-💻 Full-Stack Implementation
+#💻 Full-Stack Implementation
 Backend data engine for processing (data_engine.py)
 Frontend dashboard for visualization (app.py)
 Lightweight and easy to run locally
