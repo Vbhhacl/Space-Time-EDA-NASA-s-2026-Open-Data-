@@ -9,8 +9,7 @@ def load_and_clean_data(filepath):
     # Isolate just the month columns
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     
-    # Handle the 2023 missing data (Forward fill or drop depending on use case)
-    # For a clean time series, we will interpolate missing values within the year
+    # Handle the 2023 missing data 
     for col in months:
         df[col] = pd.to_numeric(df[col], errors='coerce')
         
