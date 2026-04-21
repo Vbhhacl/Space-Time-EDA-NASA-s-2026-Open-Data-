@@ -8,7 +8,29 @@ from data_engine import load_and_clean_data, recalibrate_baseline, calculate_vol
 # ==========================================
 # Letting Streamlit handle the theme naturally!
 st.set_page_config(page_title="Global Climate Dashboard", layout="wide", page_icon="🌍")
-
+st.markdown("""
+    <style>
+    /* 1. Main Dashboard Background (Deep Space Navy) */
+    .stApp {
+        background-color: #0B132B;
+    }
+    
+    /* 2. Sidebar Background (Slightly lighter navy for contrast) */
+    [data-testid="stSidebar"] {
+        background-color: #1C2541;
+    }
+    
+    /* 3. Make all text white/light gray so it is readable */
+    h1, h2, h3, p, span, div {
+        color: #E2E8F0 !important;
+    }
+    
+    /* 4. Fix the Streamlit divider lines to be subtly visible */
+    hr {
+        border-color: #3A506B !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 # ==========================================
 # 2. LOAD & PROCESS DATA
 # ==========================================
