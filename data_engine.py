@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 def load_and_clean_data(filepath):
     """Loads NASA dataset and handles historical and recent missing values."""
@@ -41,3 +43,29 @@ def calculate_volatility(df, window=10):
     df_copy = df.copy()
     df_copy['Annual_Volatility'] = df_copy['J-D'].rolling(window=window).std()
     return df_copy
+def generate_prediction(df, future_year):
+    """Trains a polynomial regression model to predict future anomalies."""
+    clean_df = df[['Year', 'J-D']].dropna()
+    X = clean_df[['Year']].values
+    y = clean_df['J-D'].values
+    
+    # We use a 2nd-degree polynomial to capture the accelerating curve
+    poly = PolynomialFeatures(degree=2)
+    X_poly = poly.fit_transform(X)
+    
+    model = LinearRegression()
+    model.fit(X_poly, y)
+    
+    # Predict the specific target year
+    future_X = np.array([[future_year]])
+    future_X_poly = poly.transform(future_X)
+    prediction = model.predict(future_X_poly)[0]
+    
+    # Generate the trendline for the chart (from 1880 up to the future year)
+    future_years = np.arange(int(X.min()), future_year + 1).reshape(-1, 1)
+    future_years_poly = poly.transform(future_years)
+    trend_y = model.predict(future_years_poly)
+    
+    trend_df = pd.DataFrame({'Year': future_years.flatten(), 'Predicted_Anomaly': trend_y})
+    
+    return prediction, trend_df
