@@ -54,7 +54,7 @@ hottest_temp = df_annual['J-D'].max()
 # 4. HEADER & KPI CARDS
 # ==========================================
 st.title("🌍 TerraPulse Analytics")
-st.markdown("Tracking historical temperature anomalies and projecting future climate scenarios based on NASA Goddard Institute data.")
+st.markdown("Tracking historical temperature fluctuations and projecting future climate scenarios based on NASA Goddard Institute data.")
 st.divider() 
 
 col1, col2, col3 = st.columns(3)
@@ -75,14 +75,14 @@ with tab1:
     
     fig_area = px.area(df_annual, x='Year', y='J-D', color_discrete_sequence=['#FF4B4B'])
     fig_area.add_hline(y=0, line_dash="dash", line_color="gray", annotation_text=f"Baseline ({start_yr}-{end_yr})")
-    fig_area.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", margin=dict(t=30, l=0, r=0, b=0), yaxis_title="Anomaly (°C)")
+    fig_area.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", margin=dict(t=30, l=0, r=0, b=0), yaxis_title="Fluctuation (°C)")
     fig_area.update_xaxes(showgrid=True, gridcolor='#1C2541')
     fig_area.update_yaxes(showgrid=True, gridcolor='#1C2541')
     
     st.plotly_chart(fig_area, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This graph plots the annual global temperature anomaly against the selected pre-industrial baseline over time. By utilizing an area chart, the cumulative volume of the anomaly becomes visually apparent. It serves as the primary indicator of global warming, showing a distinct upward trajectory from the mid-20th century onwards. The reference dashed line at 0.0 °C clearly illustrates how modern temperatures consistently overshoot the historical norm.")
+        st.write("This graph plots the annual global temperature fluctuation against the selected pre-industrial baseline over time. By utilizing an area chart, the cumulative volume of the fluctuation becomes visually apparent. It serves as the primary indicator of global warming, showing a distinct upward trajectory from the mid-20th century onwards. The reference dashed line at 0.0 °C clearly illustrates how modern temperatures consistently overshoot the historical norm.")
 
     st.markdown("---")
     st.subheader("The Warming Stripes")
@@ -96,13 +96,13 @@ with tab1:
 # --- TAB 2: DATA DEEP DIVE ---
 with tab2:
     st.subheader("Seasonal Heatmap Matrix")
-    df_melt = df_recal.melt(id_vars=['Year'], value_vars=month_cols, var_name='Month', value_name='Anomaly')
-    fig_heat = px.density_heatmap(df_melt, x="Month", y="Year", z="Anomaly", histfunc="avg", color_continuous_scale="RdBu_r", range_color=[-1.5, 1.5])
+    df_melt = df_recal.melt(id_vars=['Year'], value_vars=month_cols, var_name='Month', value_name='Fluctuation')
+    fig_heat = px.density_heatmap(df_melt, x="Month", y="Year", z="Fluctuation", histfunc="avg", color_continuous_scale="RdBu_r", range_color=[-1.5, 1.5])
     fig_heat.update_layout(height=500, plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
     st.plotly_chart(fig_heat, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This 2D matrix plots 'Months' on the X-axis and 'Years' on the Y-axis, using a diverging color scale (Blue to Red) to represent the temperature anomaly for that specific time intersection. While the Area Chart shows annual averages, the Heatmap reveals *seasonal* volatility. It allows users to observe whether winters are warming faster than summers, or if specific months exhibit abnormal temperature spikes across decades.")
+        st.write("This 2D matrix plots 'Months' on the X-axis and 'Years' on the Y-axis, using a diverging color scale (Blue to Red) to represent the temperature fluctuation for that specific time intersection. While the Area Chart shows annual averages, the Heatmap reveals *seasonal* volatility. It allows users to observe whether winters are warming faster than summers, or if specific months exhibit abnormal temperature spikes across decades.")
 
     st.markdown("---")
     st.subheader("Mathematical Volatility (10-Year Rolling Std Dev)")
@@ -125,7 +125,7 @@ with tab3:
     
     prediction, trend_df = generate_prediction(df_recal, target_year)
     
-    st.metric(f"Projected Anomaly in {target_year}", f"+{prediction:.2f} °C", delta="Estimated", delta_color="off")
+    st.metric(f"Projected Fluctuation in {target_year}", f"+{prediction:.2f} °C", delta="Estimated", delta_color="off")
     
     fig_pred = go.Figure()
     fig_pred.add_trace(go.Scatter(x=df_annual['Year'], y=df_annual['J-D'], mode='lines', name='Historical Data', line=dict(color='#82a0d8', width=2)))
@@ -137,7 +137,7 @@ with tab3:
     
     fig_pred.update_layout(
         plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-        yaxis_title="Anomaly (°C)", xaxis_title="Year",
+        yaxis_title="Fluctuation (°C)", xaxis_title="Year",
         hovermode="x unified", legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
     )
     fig_pred.update_xaxes(showgrid=True, gridcolor='#1C2541')
