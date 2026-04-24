@@ -82,7 +82,7 @@ with tab1:
     st.plotly_chart(fig_area, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This graph plots the annual global temperature fluctuation against the selected pre-industrial baseline over time. By utilizing an area chart, the cumulative volume of the fluctuation becomes visually apparent. It serves as the primary indicator of global warming, showing a distinct upward trajectory from the mid-20th century onwards. The reference dashed line at 0.0 °C clearly illustrates how modern temperatures consistently overshoot the historical norm.")
+        st.write("This chart shows how much global temperature has moved above or below the long-term normal for each year. The colored area makes it easy to see when temperatures stayed close to normal and when they changed more dramatically. The dashed line at 0°C is the long-term average; values above it mean warmer than normal, and values below it mean cooler than normal.")
 
     st.markdown("---")
     st.subheader("The Warming Stripes")
@@ -91,7 +91,7 @@ with tab1:
     st.plotly_chart(fig_stripes, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("Inspired by climate scientist Ed Hawkins, this visualization strips away numerical axes to present a purely chronological sequence of colored stripes. Each stripe represents a single year, colored from dark blue (cooler than average) to dark red (warmer than average). This is a powerful, minimalist tool for communicating the stark reality of climate shifts, condensing massive amounts of temporal data into an immediately recognizable pattern of escalating global heat.")
+        st.write("Each stripe is one year, and the color shows how much warmer or cooler that year was compared to the long-term average. Blue means cooler, red means warmer. When the stripes shift from blue to red over time, it makes the warming trend easy to understand without needing any numbers.")
 
 # --- TAB 2: DATA DEEP DIVE ---
 with tab2:
@@ -102,10 +102,10 @@ with tab2:
     st.plotly_chart(fig_heat, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This 2D matrix plots 'Months' on the X-axis and 'Years' on the Y-axis, using a diverging color scale (Blue to Red) to represent the temperature fluctuation for that specific time intersection. While the Area Chart shows annual averages, the Heatmap reveals *seasonal* volatility. It allows users to observe whether winters are warming faster than summers, or if specific months exhibit abnormal temperature spikes across decades.")
+        st.write("This chart shows every month and year as a colored square: blue means cooler than usual, red means warmer than usual. It helps you see whether some seasons are changing faster than others and whether certain months are getting much hotter over time.")
 
     st.markdown("---")
-    st.subheader("Mathematical Volatility (10-Year Rolling Std Dev)")
+    st.subheader("How temperature swings change over time")
     df_volatility = calculate_volatility(df_recal, window=10)
     fig_vol = px.line(df_volatility.dropna(), x='Year', y='Annual_Volatility', markers=True)
     fig_vol.update_traces(line_color='#FFA500')
@@ -115,7 +115,7 @@ with tab2:
     st.plotly_chart(fig_vol, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This line chart does not plot temperatures; instead, it plots the *Standard Deviation* of temperatures over a rolling 10-year window. This graph acts as a proxy for climate instability. A rising standard deviation indicates that global temperatures are not just rising, but becoming increasingly erratic and unpredictable, which is a critical metric for understanding extreme weather patterns.")
+        st.write("This chart shows how much the temperature has been bouncing around from year to year, using a 10-year average. When the line rises, it means the weather is becoming less steady, not just warmer. It is useful for spotting whether temperature changes are becoming more extreme over time.")
 
 # --- TAB 3: FUTURE PROJECTIONS ---
 with tab3:
@@ -146,7 +146,7 @@ with tab3:
     st.plotly_chart(fig_pred, use_container_width=True)
     
     with st.expander("📖 What does this graph mean?"):
-        st.write("This visualization overlays an interactive, 2nd-degree Polynomial Regression trendline on top of the historical data points. It extends along the X-axis into future dates based on user input. It transforms the dashboard from a purely historical EDA tool into a predictive analytics platform. By mathematically capturing the non-linear acceleration of global warming, it provides stakeholders with a visual estimation of when we might cross critical climate thresholds (such as the 1.5°C mark).")
+        st.write("This chart shows the past temperature path and a simple projection into the future for the year you choose. The solid historical line shows what has already happened, while the dashed forecast line shows what the model estimates may happen next. It helps you see whether the trend is heading toward key thresholds like 1.5°C.")
 
 # ==========================================
 # 6. PROFESSIONAL REFERENCES
